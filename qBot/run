@@ -1,0 +1,283 @@
+#!/bin/bash
+#Skrypt stworzony przez Stalker
+#Zakaz kopiowania
+#Ts: Jutuby.Net
+
+
+function greenMessage {
+    echo -e "\\033[32;1m${@}\033[0m"
+}
+
+function redMessage {
+    echo -e "\\033[31;1m${@}\033[0m"
+}
+
+function yellowMessage {
+    echo -e "\\033[33;1m${@}\033[0m"
+}
+
+function blueMessage {
+    echo -e "\\033[34;1m${@}\033[0m"
+}
+
+if [ "$1" == "start" ];
+	then
+
+    if screen -ls | grep -q daemon;
+      then
+        redMessage 'Najpierw wyłącz daemon!'
+        exit
+    fi
+
+		greenMessage 'Wybrałeś opcje start. Włączam bota!'
+		if screen -ls | grep -q core1;
+		then
+			redMessage 'Screen (1) jest już aktywny'
+		else
+			screen -AdmS core1 php core.php -i 1
+			blueMessage 'Gotowe! (1)'
+		fi
+    ############################
+    if screen -ls | grep -q core2;
+		then
+			redMessage 'Screen (2) jest już aktywny'
+		else
+			screen -AdmS core2 php core.php -i 2
+			blueMessage 'Gotowe! (2)'
+		fi
+    ############################
+    if screen -ls | grep -q core3;
+		then
+			redMessage 'Screen (3) jest już aktywny'
+		else
+			screen -AdmS core3 php core.php -i 3
+			blueMessage 'Gotowe! (3)'
+		fi
+    ############################
+    if screen -ls | grep -q core4;
+		then
+			redMessage 'Screen (4) jest już aktywny'
+		else
+			screen -AdmS core4 php core.php -i 4
+			blueMessage 'Gotowe! (4)'
+		fi
+
+
+    if screen -ls | grep -q core5;
+		then
+			redMessage 'Screen (5) jest już aktywny'
+		else
+			screen -AdmS core5 php core.php -i 5
+			blueMessage 'Gotowe! (5)'
+		fi
+
+
+elif [ "$1" == "stop" ];
+	then
+    if screen -ls | grep -q daemon;
+      then
+        redMessage 'Najpierw wyłącz daemon!'
+        exit
+    fi
+
+
+		greenMessage 'Wybrałeś opcje stop. Wyłączam bota!'
+		if screen -ls | grep -q core1;
+		then
+			screen -X -S core1 quit
+			blueMessage 'Gotowe! (1)'
+		else
+			redMessage 'Screen (1) jest już wyłączony'
+		fi
+
+
+
+
+    if screen -ls | grep -q core2;
+		then
+			screen -X -S core2 quit
+			blueMessage 'Gotowe! (2)'
+		else
+			redMessage 'Screen (2) jest już wyłączony'
+		fi
+
+
+
+    if screen -ls | grep -q core3;
+		then
+			screen -X -S core3 quit
+			blueMessage 'Gotowe! (3)'
+		else
+			redMessage 'Screen (3) jest już wyłączony'
+		fi
+
+
+    if screen -ls | grep -q core4;
+		then
+			screen -X -S core4 quit
+			blueMessage 'Gotowe! (4)'
+		else
+			redMessage 'Screen (4) jest już wyłączony'
+		fi
+
+
+    if screen -ls | grep -q core5;
+		then
+			screen -X -S core5 quit
+			blueMessage 'Gotowe! (5)'
+		else
+			redMessage 'Screen (5) jest już wyłączony'
+		fi
+
+
+elif [ "$1" == "restart" ];
+	then
+    if screen -ls | grep -q daemon;
+      then
+        screen -X -S daemon quit;
+    fi
+
+
+		greenMessage 'Wybrałeś opcje restart. Restartuję bota!'
+		if screen -ls | grep -q core1;
+		then
+			screen -X -S core1 quit
+			sleep 1
+			screen -AdmS core1 php core.php -i 1
+			blueMessage 'Gotowe! (1)'
+		else
+			redMessage 'Screen (1) jest wyłączony! Włączam go.'
+			screen -AdmS core1 php core.php -i 1
+		fi
+
+
+
+    if screen -ls | grep -q core2;
+		then
+			screen -X -S core2 quit
+			sleep 1
+			screen -AdmS core2 php core.php -i 2
+			blueMessage 'Gotowe! (2)'
+		else
+			redMessage 'Screen (2) jest wyłączony! Włączam go.'
+			screen -AdmS core2 php core.php -i 2
+		fi
+
+
+
+    if screen -ls | grep -q core3;
+		then
+			screen -X -S core3 quit
+			sleep 1
+			screen -AdmS core3 php core.php -i 3
+			blueMessage 'Gotowe! (3)'
+		else
+			redMessage 'Screen (3) jest wyłączony! Włączam go.'
+			screen -AdmS core3 php core.php -i 3
+		fi
+
+
+    if screen -ls | grep -q core4;
+		then
+			screen -X -S core4 quit
+			sleep 1
+			screen -AdmS core4 php core.php -i 4
+			blueMessage 'Gotowe! (4)'
+		else
+			redMessage 'Screen (4) jest wyłączony! Włączam go.'
+			screen -AdmS core4 php core.php -i 4
+		fi
+
+
+    if screen -ls | grep -q core5;
+		then
+			screen -X -S core5 quit
+			sleep 1
+			screen -AdmS core5 php core.php -i 5
+			blueMessage 'Gotowe! (5)'
+		else
+			redMessage 'Screen (5) jest wyłączony! Włączam go.'
+			screen -AdmS core5 php core.php -i 5
+		fi
+
+
+
+    if screen -ls | grep -q daemon;
+      then
+        redMessage ''
+      else
+        screen -AdmS daemon ./run demon
+    fi
+
+
+
+
+    ####################
+
+elif [ "$1" == "daemon" ];
+  then
+    if screen -ls | grep -q daemon;
+    then
+      screen -X -S daemon quit
+      screen -X -S core1 quit
+      screen -X -S core2 quit
+      screen -X -S core3 quit
+      screen -X -S core4 quit
+      screen -X -S core5 quit
+      redMessage 'Wyłączam daemon!'
+    else
+      screen -AdmS daemon ./run demon
+      greenMessage "Włączam daemon!"
+    fi
+
+
+elif [ "$1" == "demon" ];
+  then
+    while [ true ] ; do
+      if screen -ls | grep -q core1;
+      then
+        continue
+      else
+        screen -AdmS core1 php core.php -i 1
+      fi
+
+      if screen -ls | grep -q core2;
+      then
+        continue
+      else
+        screen -AdmS core2 php core.php -i 2
+      fi
+
+      if screen -ls | grep -q core3;
+      then
+        continue
+      else
+        screen -AdmS core3 php core.php -i 3
+      fi
+
+
+      if screen -ls | grep -q core4;
+      then
+        continue
+      else
+        screen -AdmS core4 php core.php -i 4
+      fi
+
+      if screen -ls | grep -q core5;
+      then
+        continue
+      else
+        screen -AdmS core5 php core.php -i 5
+      fi
+
+
+      sleep 30
+    done
+
+
+else
+redMessage 'Użyj run start/stop/restart/daemon'
+fi
+#Skrypt stworzony przez Stalker
+#Zakaz kopiowania
+#Ts: Jutuby.Net
